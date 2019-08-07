@@ -4,11 +4,11 @@
   * [GoREST API](#gorest-api)
     + [Resources Tested](#resources-tested-)
     + [Test cases](#test-cases-)
-      - [Users](#-users)
-      - [Posts](#-posts)
-      - [Commends](#-commends)
-      - [Albums](#-albums)
-      - [Photos](#-photos)
+      - [Users](#users)
+      - [Posts](#posts)
+      - [Comments](#comments)
+      - [Albums](#albums)
+      - [Photos](#photos)
 	  
 
 
@@ -20,7 +20,7 @@ Testing various REST API methods on the GoREST API website.
 ### Resources tested
   * Users
   * Posts
-  * Commends (TBD)
+  * Comments (TBD)
   * Albums (TBD)
   * Photos (TBD)
 
@@ -56,7 +56,7 @@ Testing various REST API methods on the GoREST API website.
   5. List posts by title
   6. List posts by body
   
- #### Commends
+ #### Comments
   (TBD)
   
  #### Albums
