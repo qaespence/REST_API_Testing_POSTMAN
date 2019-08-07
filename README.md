@@ -27,8 +27,10 @@ Testing various REST API methods on the GoREST API website.
 ### Test cases
 
 ####  Users
+##### HEAD/OPT
   1. Show overview info of the Users listing
   2. Show the supported verbs of Users
+##### GET
   3. List all users
   4. List users by name
   5. List users by gender
@@ -39,29 +41,34 @@ Testing various REST API methods on the GoREST API website.
   10. List users by address
   11. List users by status
   12. Return the details of user by ID
-  13. Negative - Return details of user by bad ID
-  14. Create a new user
-  15. Update a user using PATCH
-  16. Negative - Update a user using PATCH, bad ID
-  17. Update a user using PUT
-  18. Negative - Update a user using PUT, bad ID
-  19. Delete the user
+##### POST (deprecated)
+  13. Create a new user (deprecated)
+##### PATCH/PUT
+  14. Update a user using PATCH
+  15. Update a user using PUT
+  16. Delete the user
+##### Negative Tests
+  17. Negative - Return details of user by bad ID
+  18. Negative - Update a user using PATCH, bad ID
+  19. Negative - Update a user using PUT, bad ID
   20. Negative - Delete the user but bad ID
   
- #### Posts
+#### Posts
+##### HEAD/OPT
   1. Show overview info of the Posts listing
   2. Show the supported verbs of Posts
+##### GET 
   3. Return the details of post by ID
   4. List posts by user ID
   5. List posts by title
   6. List posts by body
   
- #### Comments
+#### Comments
   (TBD)
   
- #### Albums
+#### Albums
   (TBD)
   
- #### Photos
+#### Photos
   (TBD)
   
