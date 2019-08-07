@@ -872,7 +872,262 @@
 		},
 		{
 			"name": "posts",
-			"item": []
+			"item": [
+				{
+					"name": "Show overview info of the Posts listing",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Posts_Endpoint}}/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Posts_Endpoint}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show the supported verbs of Posts",
+					"request": {
+						"method": "OPTIONS",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Posts_Endpoint}}/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Posts_Endpoint}}",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6ea071d9-bf16-4402-b3c0-59b97e9425c1",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Posts_Endpoint}}/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Posts_Endpoint}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return the details of post by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Posts_Endpoint}}/{{Find_Post_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Posts_Endpoint}}",
+								"{{Find_Post_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List posts by user ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Posts_Endpoint}}/?user_id={{Find_Post_UserID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Posts_Endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "{{Find_Post_UserID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List posts by title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Posts_Endpoint}}/?title={{Find_Post_Title}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Posts_Endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "{{Find_Post_Title}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List posts by body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Posts_Endpoint}}/?body={{Find_Post_Body}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Posts_Endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "body",
+									"value": "{{Find_Post_Body}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "comments",
@@ -921,135 +1176,165 @@
 	],
 	"variable": [
 		{
-			"id": "742f9464-2865-4792-b580-82da932debe8",
+			"id": "51b697b1-d9ac-439b-936a-be466bccf121",
 			"key": "Find_User_Name",
 			"value": "john",
 			"type": "string"
 		},
 		{
-			"id": "974db950-c61e-495d-b9aa-40d831b97375",
+			"id": "e4cc4063-59ed-4606-9613-48cc82db0e43",
 			"key": "Users_Endpoint",
 			"value": "public-api/users",
 			"type": "string"
 		},
 		{
-			"id": "80b7d02a-1181-4d2b-8524-668c6a041435",
+			"id": "baffcac9-2b74-4028-b155-582ca6288a90",
 			"key": "Create_User_Firstname",
 			"value": "Tod",
 			"type": "string"
 		},
 		{
-			"id": "3b19c0a0-9ea9-4ec0-a2cb-535b528a5403",
+			"id": "ebc73bbe-8920-4630-9714-7676f3a553cf",
 			"key": "Create_User_Lastname",
 			"value": "Doh",
 			"type": "string"
 		},
 		{
-			"id": "843187b1-8dbe-4ae0-a9b7-eacf9a2166ed",
+			"id": "419a689d-fd74-4c7a-98c1-595bf058245a",
 			"key": "Create_User_Gender",
 			"value": "male",
 			"type": "string"
 		},
 		{
-			"id": "b211ca61-f456-42ef-aa24-7ff14cfcf9b4",
+			"id": "91ff9efa-4c61-45bb-92b3-cbac06d0bbbe",
 			"key": "Create_User_DOB",
 			"value": "1977-01-01",
 			"type": "string"
 		},
 		{
-			"id": "198d5a49-6bc5-43f2-9982-5d99885d28b1",
+			"id": "91ff23c8-696c-4f32-935f-5ab5d2306099",
 			"key": "Create_User_Email",
 			"value": "tester@test.com",
 			"type": "string"
 		},
 		{
-			"id": "906d950c-f80c-4ffc-b2b3-45ddc0938c04",
+			"id": "8afdbdb7-1e72-4053-9147-106066ddcfcb",
 			"key": "Create_User_Phone",
 			"value": "(123) 456-7890",
 			"type": "string"
 		},
 		{
-			"id": "3216687f-ca5d-4bc0-940b-325ba1bb604f",
+			"id": "4c50dfb5-5c2b-4156-9f73-92c292da139d",
 			"key": "Create_User_Website",
 			"value": "https://www.someplace.com/index.html",
 			"type": "string"
 		},
 		{
-			"id": "af9cec35-c78d-4f1f-96ee-ac9a9b1b1ffc",
+			"id": "6a1eeeab-a0ee-4023-a5d3-b5df1e87184d",
 			"key": "Create_User_Address",
 			"value": "1234 5th Street, New City, CA 90001",
 			"type": "string"
 		},
 		{
-			"id": "bd38ecd0-c97e-45cd-a4eb-d6a716eb53a6",
+			"id": "3f4008d7-7546-463d-b10d-84926fd88c11",
 			"key": "Create_User_Status",
 			"value": "active",
 			"type": "string"
 		},
 		{
-			"id": "ef56aabc-da7d-468b-a83d-b8ea6e7e0981",
+			"id": "9f0d605f-99ba-42c1-95af-1a1c2b43cb3a",
 			"key": "Find_User_ID",
 			"value": "4",
 			"type": "string"
 		},
 		{
-			"id": "60d324f2-461c-4055-aadb-4dd11be38369",
+			"id": "28f0ce06-e234-484e-89bf-38bc54b59551",
 			"key": "Find_User_Gender",
 			"value": "female",
 			"type": "string"
 		},
 		{
-			"id": "b6d0afee-46a4-4ba0-b0aa-a287b2d4c3ee",
+			"id": "80b7cc11-bd05-4574-9ce6-3b7dacac2adf",
 			"key": "Find_User_DOB",
 			"value": "1980",
 			"type": "string"
 		},
 		{
-			"id": "c49d74ef-b368-43c5-b976-9f370ba28202",
+			"id": "c5695f54-43cf-40b8-acbc-0cbaca7f8e66",
 			"key": "Find_User_Email",
 			"value": "@example",
 			"type": "string"
 		},
 		{
-			"id": "83e58e87-b064-4d26-abe5-cc9bb61c42f3",
+			"id": "15aeb6de-7c1d-4043-93ac-05dda635420b",
 			"key": "Find_User_Phone",
 			"value": "%2B1",
 			"type": "string"
 		},
 		{
-			"id": "7a145a1e-3560-438e-b469-b1e7f8f26174",
+			"id": "c1225fe2-269d-4b5a-a228-b602d4d3536b",
 			"key": "Find_User_Website",
 			"value": "zieme.com",
 			"type": "string"
 		},
 		{
-			"id": "9cfa18f0-b0b1-46f7-8811-165ad0a5c3c8",
+			"id": "fbda0a00-df49-449e-b281-eb23860bb3c0",
 			"key": "Find_User_Address",
 			"value": ", CA",
 			"type": "string"
 		},
 		{
-			"id": "117ad339-3240-47d3-8293-5d6a76f54617",
+			"id": "d00ebc19-ac83-49f9-ba46-4eebf5e32628",
 			"key": "Find_User_Status",
 			"value": "inactive",
 			"type": "string"
 		},
 		{
-			"id": "82f54355-8ecd-4bd1-bbc4-ccb03807e710",
+			"id": "99584215-3733-4860-a33c-ec805973d6af",
 			"key": "Bad_User_ID",
 			"value": "4567",
 			"type": "string"
 		},
 		{
-			"id": "68e48eb9-fcf7-4e7d-a00f-3c4c4c08102f",
+			"id": "7176e78a-7311-4b5c-a8dc-d965e10e7c58",
 			"key": "Delete_User_ID",
 			"value": "123",
 			"type": "string"
 		},
 		{
-			"id": "90d4131a-55f7-4107-a257-1fe605518e03",
+			"id": "d6c81070-748d-438b-84b6-782a707b0ae6",
 			"key": "Update_User_ID",
 			"value": "500",
+			"type": "string"
+		},
+		{
+			"id": "2b58ae3a-8bd9-433b-9c80-57a3c97635b6",
+			"key": "Posts_Endpoint",
+			"value": "public-api/posts",
+			"type": "string"
+		},
+		{
+			"id": "b35b6890-22d0-40c7-b418-131e720f4c05",
+			"key": "Find_Post_ID",
+			"value": "4",
+			"type": "string"
+		},
+		{
+			"id": "ca323e8c-4680-4690-8e3a-40e288ff959a",
+			"key": "Find_Post_UserID",
+			"value": "390",
+			"type": "string"
+		},
+		{
+			"id": "856c87fe-b11d-4ba0-8300-85d90bc7404c",
+			"key": "Find_Post_Title",
+			"value": "ipsum",
+			"type": "string"
+		},
+		{
+			"id": "fb81106c-c09e-4333-baf0-0125da36976e",
+			"key": "Find_Post_Body",
+			"value": "consequatur",
 			"type": "string"
 		}
 	]
