@@ -1,0 +1,1056 @@
+{
+	"info": {
+		"_postman_id": "bbc8502f-2d2f-49b1-8175-91418b42d4eb",
+		"name": "GoREST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Show overview info of the Users listing",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show the supported verbs of Users",
+					"request": {
+						"method": "OPTIONS",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6ea071d9-bf16-4402-b3c0-59b97e9425c1",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List users by name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/?name={{Find_User_Name}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{Find_User_Name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List users by gender",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body contains the OK result\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});",
+									"pm.test(\"Body does not contain \\\"male\\\" in results\", function () {",
+									"    pm.expect(pm.response.text()).to.not.include(\"\\\"male\\\"\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/?gender={{Find_User_Gender}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "gender",
+									"value": "{{Find_User_Gender}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List users by DOB",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/?dob={{Find_User_DOB}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "dob",
+									"value": "{{Find_User_DOB}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List users by email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/?email={{Find_User_Email}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{Find_User_Email}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List users by phone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/?phone={{Find_User_Phone}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "{{Find_User_Phone}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List users by website",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/?website={{Find_User_Website}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "website",
+									"value": "{{Find_User_Website}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List users by address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/?address={{Find_User_Address}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "address",
+									"value": "{{Find_User_Address}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List users by status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/?status={{Find_User_Status}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "{{Find_User_Status}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return the details of user by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/{{Find_User_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								"{{Find_User_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative - Return details of user by bad ID (BUGGED)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/{{Bad_User_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								"{{Bad_User_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new user (BUGGED)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\": \"{{Create_User_Firstname}}\",\r\n    \"last_name\": \"{{Create_User_Lastname}}\",\r\n    \"gender\": \"{{Create_User_Gender}}\",\r\n    \"dob\": \"{{Create_User_DOB}}\",\r\n    \"email\": \"{{Create_User_Email}}\",\r\n    \"phone\": \"{{Create_User_Phone}}\",\r\n    \"website\": \"{{Create_User_Website}}\",\r\n    \"address\": \"{{Create_User_Address}}\",\r\n    \"status\": \"{{Create_User_Status}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/1930",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								"1930"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a user using PATCH",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"last_name\": \"{{Create_User_Lastname}}\",\r\n    \"dob\": \"{{Create_User_DOB}}\",\r\n    \"phone\": \"{{Create_User_Phone}}\",\r\n    \"address\": \"{{Create_User_Address}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/{{Update_User_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								"{{Update_User_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative - Update a user using PATCH, bad ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"last_name\": \"{{Create_User_Lastname}}\",\r\n    \"dob\": \"{{Create_User_DOB}}\",\r\n    \"phone\": \"{{Create_User_Phone}}\",\r\n    \"address\": \"{{Create_User_Address}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/{{Bad_User_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								"{{Bad_User_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a user using PUT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "188b508c-35d1-47f2-9253-e8d715f34e27",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\": \"{{Create_User_Firstname}}\",\r\n    \"last_name\": \"{{Create_User_Lastname}}\",\r\n    \"gender\": \"{{Create_User_Gender}}\",\r\n    \"dob\": \"{{Create_User_DOB}}\",\r\n    \"email\": \"{{Create_User_Email}}\",\r\n    \"phone\": \"{{Create_User_Phone}}\",\r\n    \"website\": \"{{Create_User_Website}}\",\r\n    \"address\": \"{{Create_User_Address}}\",\r\n    \"status\": \"{{Create_User_Status}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/{{Update_User_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								"{{Update_User_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative - Update a user using PUT, bad ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "188b508c-35d1-47f2-9253-e8d715f34e27",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\": \"{{Create_User_Firstname}}\",\r\n    \"last_name\": \"{{Create_User_Lastname}}\",\r\n    \"gender\": \"{{Create_User_Gender}}\",\r\n    \"dob\": \"{{Create_User_DOB}}\",\r\n    \"email\": \"{{Create_User_Email}}\",\r\n    \"phone\": \"{{Create_User_Phone}}\",\r\n    \"website\": \"{{Create_User_Website}}\",\r\n    \"address\": \"{{Create_User_Address}}\",\r\n    \"status\": \"{{Create_User_Status}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/{{Bad_User_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								"{{Bad_User_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete the user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed1219c5-95c2-4ee4-9823-4e7f60a6e298",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"The request was handled successfully and the response contains no body content.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/{{Delete_User_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								"{{Delete_User_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative - Delete the user but bad ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed1219c5-95c2-4ee4-9823-4e7f60a6e298",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/{{Users_Endpoint}}/{{Bad_User_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"{{Users_Endpoint}}",
+								"{{Bad_User_ID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "posts",
+			"item": []
+		},
+		{
+			"name": "comments",
+			"item": []
+		},
+		{
+			"name": "albums",
+			"item": []
+		},
+		{
+			"name": "photos",
+			"item": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "OCcRe6cGpZXuzm0KhBRaJ_nTUnjt4lbDb6Aa",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "0f858c68-b15e-46d0-b47a-12295c536f14",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c0a8a227-b058-43d1-834e-cb727c0d1eda",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "742f9464-2865-4792-b580-82da932debe8",
+			"key": "Find_User_Name",
+			"value": "john",
+			"type": "string"
+		},
+		{
+			"id": "974db950-c61e-495d-b9aa-40d831b97375",
+			"key": "Users_Endpoint",
+			"value": "public-api/users",
+			"type": "string"
+		},
+		{
+			"id": "80b7d02a-1181-4d2b-8524-668c6a041435",
+			"key": "Create_User_Firstname",
+			"value": "Tod",
+			"type": "string"
+		},
+		{
+			"id": "3b19c0a0-9ea9-4ec0-a2cb-535b528a5403",
+			"key": "Create_User_Lastname",
+			"value": "Doh",
+			"type": "string"
+		},
+		{
+			"id": "843187b1-8dbe-4ae0-a9b7-eacf9a2166ed",
+			"key": "Create_User_Gender",
+			"value": "male",
+			"type": "string"
+		},
+		{
+			"id": "b211ca61-f456-42ef-aa24-7ff14cfcf9b4",
+			"key": "Create_User_DOB",
+			"value": "1977-01-01",
+			"type": "string"
+		},
+		{
+			"id": "198d5a49-6bc5-43f2-9982-5d99885d28b1",
+			"key": "Create_User_Email",
+			"value": "tester@test.com",
+			"type": "string"
+		},
+		{
+			"id": "906d950c-f80c-4ffc-b2b3-45ddc0938c04",
+			"key": "Create_User_Phone",
+			"value": "(123) 456-7890",
+			"type": "string"
+		},
+		{
+			"id": "3216687f-ca5d-4bc0-940b-325ba1bb604f",
+			"key": "Create_User_Website",
+			"value": "https://www.someplace.com/index.html",
+			"type": "string"
+		},
+		{
+			"id": "af9cec35-c78d-4f1f-96ee-ac9a9b1b1ffc",
+			"key": "Create_User_Address",
+			"value": "1234 5th Street, New City, CA 90001",
+			"type": "string"
+		},
+		{
+			"id": "bd38ecd0-c97e-45cd-a4eb-d6a716eb53a6",
+			"key": "Create_User_Status",
+			"value": "active",
+			"type": "string"
+		},
+		{
+			"id": "ef56aabc-da7d-468b-a83d-b8ea6e7e0981",
+			"key": "Find_User_ID",
+			"value": "4",
+			"type": "string"
+		},
+		{
+			"id": "60d324f2-461c-4055-aadb-4dd11be38369",
+			"key": "Find_User_Gender",
+			"value": "female",
+			"type": "string"
+		},
+		{
+			"id": "b6d0afee-46a4-4ba0-b0aa-a287b2d4c3ee",
+			"key": "Find_User_DOB",
+			"value": "1980",
+			"type": "string"
+		},
+		{
+			"id": "c49d74ef-b368-43c5-b976-9f370ba28202",
+			"key": "Find_User_Email",
+			"value": "@example",
+			"type": "string"
+		},
+		{
+			"id": "83e58e87-b064-4d26-abe5-cc9bb61c42f3",
+			"key": "Find_User_Phone",
+			"value": "%2B1",
+			"type": "string"
+		},
+		{
+			"id": "7a145a1e-3560-438e-b469-b1e7f8f26174",
+			"key": "Find_User_Website",
+			"value": "zieme.com",
+			"type": "string"
+		},
+		{
+			"id": "9cfa18f0-b0b1-46f7-8811-165ad0a5c3c8",
+			"key": "Find_User_Address",
+			"value": ", CA",
+			"type": "string"
+		},
+		{
+			"id": "117ad339-3240-47d3-8293-5d6a76f54617",
+			"key": "Find_User_Status",
+			"value": "inactive",
+			"type": "string"
+		},
+		{
+			"id": "82f54355-8ecd-4bd1-bbc4-ccb03807e710",
+			"key": "Bad_User_ID",
+			"value": "4567",
+			"type": "string"
+		},
+		{
+			"id": "68e48eb9-fcf7-4e7d-a00f-3c4c4c08102f",
+			"key": "Delete_User_ID",
+			"value": "123",
+			"type": "string"
+		},
+		{
+			"id": "90d4131a-55f7-4107-a257-1fe605518e03",
+			"key": "Update_User_ID",
+			"value": "500",
+			"type": "string"
+		}
+	]
+}
