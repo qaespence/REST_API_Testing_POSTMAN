@@ -1,29 +1,30 @@
-- [REST API Testing using Postman](#rest-api-testing-using-postman)
-  * [GoREST API](#gorest-api)
-    + [Resources tested:](#resources-tested-)
-    + [Test cases created:](#test-cases-created-)
-      - [* Users](#--users)
-      - [* Posts](#--posts)
-      - [* Commends](#--commends)
-      - [* Albums](#--albums)
-      - [* Photos](#--photos)
-	  
-	  
+
 # REST API Testing using Postman
+
+  * [GoREST API](#gorest-api)
+    + [Resources Tested](#resources-tested-)
+    + [Test cases](#test-cases-)
+      - [* Users](#-users)
+      - [* Posts](#-posts)
+      - [* Commends](#-commends)
+      - [* Albums](#-albums)
+      - [* Photos](#-photos)
+	  
+
 
 > This is a project area for practicing Rest API testing using Postman.
 
 ## GoREST API
 Testing various REST API methods on the GoREST API website.
 
-### Resources tested:
+### Resources tested
   * Users
   * Posts
   * Commends (TBD)
   * Albums (TBD)
   * Photos (TBD)
 
-### Test cases created:
+### Test cases
 
 ####  * Users
   1. Show overview info of the Users listing
