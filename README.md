@@ -16,6 +16,7 @@
 
 ## GoREST API
 Testing various REST API methods on the GoREST API website.
+Site URL: https://gorest.co.in
 
 ### Resources tested
   * Users
@@ -64,11 +65,33 @@ Testing various REST API methods on the GoREST API website.
   6. List posts by body
   
 #### Comments
-  (TBD)
+##### HEAD/OPT
+  1. Show overview info of the Comments listing
+  2. Show the supported verbs of Comments
+##### GET 
+  3. Return the details of comment by ID
+  4. List comments by post ID
+  5. List comments by name
+  6. List comments by email
+  7. List comments by body
   
 #### Albums
-  (TBD)
+##### HEAD/OPT
+  1. Show overview info of the Albums listing
+  2. Show the supported verbs of Albums
+##### GET 
+  3. Return the details of album by ID
+  4. List albums by user ID
+  5. List albums by title
   
 #### Photos
-  (TBD)
+##### HEAD/OPT
+  1. Show overview info of the Photos listing
+  2. Show the supported verbs of Photos
+##### GET 
+  3. Return the details of photo by ID
+  4. List photos by album ID
+  5. List photos by title
+  6. List photos by url
+  7. List photos by thumbnail
   
