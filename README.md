@@ -1,21 +1,31 @@
+- [REST API Testing using Postman](#rest-api-testing-using-postman)
+  * [GoREST API](#gorest-api)
+    + [Resources tested:](#resources-tested-)
+    + [Test cases created:](#test-cases-created-)
+      - [* Users](#--users)
+      - [* Posts](#--posts)
+      - [* Commends](#--commends)
+      - [* Albums](#--albums)
+      - [* Photos](#--photos)
+	  
+	  
 # REST API Testing using Postman
-=======
+
 > This is a project area for practicing Rest API testing using Postman.
-=======
 
 ## GoREST API
 Testing various REST API methods on the GoREST API website.
 
-Resources tested:
+### Resources tested:
   * Users
   * Posts
   * Commends (TBD)
   * Albums (TBD)
   * Photos (TBD)
 
-Test cases created:
+### Test cases created:
 
-  * Users
+####  * Users
   1. Show overview info of the Users listing
   2. Show the supported verbs of Users
   3. List all users
@@ -37,7 +47,7 @@ Test cases created:
   19. Delete the user
   20. Negative - Delete the user but bad ID
   
-  * Posts
+ #### * Posts
   1. Show overview info of the Posts listing
   2. Show the supported verbs of Posts
   3. Return the details of post by ID
@@ -45,12 +55,12 @@ Test cases created:
   5. List posts by title
   6. List posts by body
   
-  * Commends
+ #### * Commends
   (TBD)
   
-  * Albums
+ #### * Albums
   (TBD)
   
-  * Photos
+ #### * Photos
   (TBD)
   
