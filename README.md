@@ -56,42 +56,46 @@ Site URL: https://gorest.co.in
   
 #### Posts
 ##### HEAD/OPT
-  1. Show overview info of the Posts listing
-  2. Show the supported verbs of Posts
+  21. Show overview info of the Posts listing
+  22. Show the supported verbs of Posts
 ##### GET 
-  3. Return the details of post by ID
-  4. List posts by user ID
-  5. List posts by title
-  6. List posts by body
+  23. List all posts
+  24. Return the details of post by ID
+  25. List posts by user ID
+  26. List posts by title
+  27. List posts by body
   
 #### Comments
 ##### HEAD/OPT
-  1. Show overview info of the Comments listing
-  2. Show the supported verbs of Comments
+  28. Show overview info of the Comments listing
+  29. Show the supported verbs of Comments
 ##### GET 
-  3. Return the details of comment by ID
-  4. List comments by post ID
-  5. List comments by name
-  6. List comments by email
-  7. List comments by body
+  30. List all comments
+  31. Return the details of comment by ID
+  32. List comments by post ID
+  33. List comments by name
+  34. List comments by email
+  35. List comments by body
   
 #### Albums
 ##### HEAD/OPT
-  1. Show overview info of the Albums listing
-  2. Show the supported verbs of Albums
+  36. Show overview info of the Albums listing
+  37. Show the supported verbs of Albums
 ##### GET 
-  3. Return the details of album by ID
-  4. List albums by user ID
-  5. List albums by title
+  38. List all albums
+  39. Return the details of album by ID
+  40. List albums by user ID
+  41. List albums by title
   
 #### Photos
 ##### HEAD/OPT
-  1. Show overview info of the Photos listing
-  2. Show the supported verbs of Photos
+  42. Show overview info of the Photos listing
+  43. Show the supported verbs of Photos
 ##### GET 
-  3. Return the details of photo by ID
-  4. List photos by album ID
-  5. List photos by title
-  6. List photos by url
-  7. List photos by thumbnail
+  44. List all photos
+  45. Return the details of photo by ID
+  46. List photos by album ID
+  47. List photos by title
+  48. List photos by url
+  49. List photos by thumbnail
   
