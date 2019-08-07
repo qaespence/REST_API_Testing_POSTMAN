@@ -4,11 +4,11 @@
   * [GoREST API](#gorest-api)
     + [Resources Tested](#resources-tested-)
     + [Test cases](#test-cases-)
-      - [* Users](#-users)
-      - [* Posts](#-posts)
-      - [* Commends](#-commends)
-      - [* Albums](#-albums)
-      - [* Photos](#-photos)
+      - [Users](#-users)
+      - [Posts](#-posts)
+      - [Commends](#-commends)
+      - [Albums](#-albums)
+      - [Photos](#-photos)
 	  
 
 
@@ -26,7 +26,7 @@ Testing various REST API methods on the GoREST API website.
 
 ### Test cases
 
-####  * Users
+####  Users
   1. Show overview info of the Users listing
   2. Show the supported verbs of Users
   3. List all users
@@ -48,7 +48,7 @@ Testing various REST API methods on the GoREST API website.
   19. Delete the user
   20. Negative - Delete the user but bad ID
   
- #### * Posts
+ #### Posts
   1. Show overview info of the Posts listing
   2. Show the supported verbs of Posts
   3. Return the details of post by ID
@@ -56,12 +56,12 @@ Testing various REST API methods on the GoREST API website.
   5. List posts by title
   6. List posts by body
   
- #### * Commends
+ #### Commends
   (TBD)
   
- #### * Albums
+ #### Albums
   (TBD)
   
- #### * Photos
+ #### Photos
   (TBD)
   
