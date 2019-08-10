@@ -13,6 +13,19 @@
 					"item": [
 						{
 							"name": "Show overview info of the Users listing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4972e23e-2f4c-4cae-934d-672e94afc0f2",
+										"exec": [
+											"pm.test(\"Response time is less than 300ms\", function () { pm.expect(pm.response.responseTime).to.be.below(300); });",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "HEAD",
 								"header": [],
@@ -31,6 +44,20 @@
 						},
 						{
 							"name": "Show the supported verbs of Users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3177b856-661d-4c08-bb6b-9d990c73f79e",
+										"exec": [
+											"pm.test(\"Response time is less than 900ms\", function () { pm.expect(pm.response.responseTime).to.be.below(900); });",
+											"",
+											"pm.test(\"Check for OK message\", function () { pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\"); });"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "OPTIONS",
 								"header": [],
@@ -46,6 +73,28 @@
 								}
 							},
 							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7242cc73-e0e9-470a-8a0d-1766f65ee582",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "49a38562-d905-44ca-840c-c943466ffbe6",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+								]
+							}
 						}
 					],
 					"_postman_isSubFolder": true
@@ -430,7 +479,15 @@
 								"id": "21055208-f054-47a2-ba2f-2ff52adcc447",
 								"type": "text/javascript",
 								"exec": [
-									""
+									"pm.globals.set(\"User_ID\", \"5\");",
+									"pm.globals.set(\"User_Name\", \"John\");",
+									"pm.globals.set(\"User_Gender\", \"female\");",
+									"pm.globals.set(\"User_DOB\", \"1980\");",
+									"pm.globals.set(\"User_Email\", \"@example\");",
+									"pm.globals.set(\"User_Phone\", \"%2B1\");",
+									"pm.globals.set(\"User_Website\", \"zieme.com\");",
+									"pm.globals.set(\"User_Address\", \", CA\");",
+									"pm.globals.set(\"User_Status\", \"inactive\");"
 								]
 							}
 						},
@@ -462,69 +519,39 @@
 					"_postman_isSubFolder": true
 				},
 				{
-					"name": "POST (deprecated)",
+					"name": "PATCH/PUT",
 					"item": [
 						{
-							"name": "Create a new user (deprecated)",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
+							"name": "Backup User Entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.globals.set(\"savedData\", JSON.stringify(jsonData.result));"
+										],
+										"type": "text/javascript"
 									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"first_name\": \"{{New_User_Firstname}}\",\r\n    \"last_name\": \"{{New_User_Lastname}}\",\r\n    \"gender\": \"{{New_User_Gender}}\",\r\n    \"dob\": \"{{New_User_DOB}}\",\r\n    \"email\": \"{{New_User_Email}}\",\r\n    \"phone\": \"{{New_User_Phone}}\",\r\n    \"website\": \"{{New_User_Website}}\",\r\n    \"address\": \"{{New_User_Address}}\",\r\n    \"status\": \"{{New_User_Status}}\"\r\n}"
-								},
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
 								"url": {
-									"raw": "{{URL}}/{{Users_Endpoint}}/1930",
+									"raw": "{{URL}}/{{Users_Endpoint}}/{{Update_User_ID}}",
 									"host": [
 										"{{URL}}"
 									],
 									"path": [
 										"{{Users_Endpoint}}",
-										"1930"
+										"{{Update_User_ID}}"
 									]
 								}
 							},
 							"response": []
-						}
-					],
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "cba3de4c-8aaa-453f-8a8c-5d81105102b4",
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
 						},
-						{
-							"listen": "test",
-							"script": {
-								"id": "6a08b8e5-cf03-451b-bc5c-1a1234887faa",
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "PATCH/PUT",
-					"item": [
 						{
 							"name": "Update a user using PATCH",
 							"event": [
@@ -567,6 +594,102 @@
 									"mode": "raw",
 									"raw": "{\r\n    \"last_name\": \"{{New_User_Lastname}}\",\r\n    \"dob\": \"{{New_User_DOB}}\",\r\n    \"phone\": \"{{New_User_Phone}}\",\r\n    \"address\": \"{{New_User_Address}}\"\r\n}"
 								},
+								"url": {
+									"raw": "{{URL}}/{{Users_Endpoint}}/{{Update_User_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Users_Endpoint}}",
+										"{{Update_User_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Restore User from Backup",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ab840253-4141-408a-bb7d-0c6ca708c899",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{savedData}}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Users_Endpoint}}/{{Update_User_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Users_Endpoint}}",
+										"{{Update_User_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Backup User Entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.globals.set(\"savedData\", JSON.stringify(jsonData.result));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
 								"url": {
 									"raw": "{{URL}}/{{Users_Endpoint}}/{{Update_User_ID}}",
 									"host": [
@@ -634,6 +757,113 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Restore User from Backup",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ab840253-4141-408a-bb7d-0c6ca708c899",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{savedData}}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Users_Endpoint}}/{{Update_User_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Users_Endpoint}}",
+										"{{Update_User_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a3a587b5-55c8-479e-83de-078e39d39030",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.set(\"Update_User_ID\", \"501\");",
+									"",
+									"pm.globals.set(\"New_User_Firstname\", \"Tod\");",
+									"pm.globals.set(\"New_User_Lastname\", \"Doh\")",
+									"pm.globals.set(\"New_User_Gender\", \"male\");",
+									"pm.globals.set(\"New_User_DOB\", \"1977-01-01\");",
+									"pm.globals.set(\"New_User_Email\", \"tester@test.com\");",
+									"pm.globals.set(\"New_User_Phone\", \"(123) 456-7890\");",
+									"pm.globals.set(\"New_User_Website\", \"https://www.someplace.com/index.html\");",
+									"pm.globals.set(\"New_User_Address\", \"1234 5th Street, New City, CA 90001\");",
+									"pm.globals.set(\"New_User_Status\", \"active\");",
+									"",
+									"// pm.globals.set(\"Backup_User_Firstname\", \"Camron\");",
+									"// pm.globals.set(\"Backup_User_Lastname\", \"Bergstrom\")",
+									"// pm.globals.set(\"Backup_User_Gender\", \"male\");",
+									"// pm.globals.set(\"Backup_User_DOB\", \"1998-07-26\");",
+									"// pm.globals.set(\"Backup_User_Email\", \"herminia.auer@example.com\");",
+									"// pm.globals.set(\"Backup_User_Phone\", \"+1-331-695-7378\");",
+									"// pm.globals.set(\"Backup_User_Website\", \"https://www.someplace.com/index.html\");",
+									"// pm.globals.set(\"Backup_User_Address\", \"642 Emely Point%0D%0AWestmouth, KS 75125\");",
+									"// pm.globals.set(\"Backup_User_Status\", \"inactive\");"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf868084-cc10-4600-bd7f-b80eda3d6a17",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
 						}
 					],
 					"_postman_isSubFolder": true
@@ -682,6 +912,28 @@
 							"response": []
 						}
 					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d3fce909-dc56-4cae-ad1b-320ef0958177",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.set(\"Delete_User_ID\", \"123\");"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "ea8e4757-a648-4290-ad19-8ff2b1028222",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
 					"_postman_isSubFolder": true
 				},
 				{
@@ -691,7 +943,7 @@
 							"name": "GET",
 							"item": [
 								{
-									"name": "Negative - Return details of user by bad ID (BUGGED)",
+									"name": "Negative - Return details of user by bad ID",
 									"event": [
 										{
 											"listen": "test",
@@ -702,8 +954,8 @@
 													"    pm.response.to.have.status(200);",
 													"});",
 													"",
-													"pm.test(\"Response time is less than 300ms\", function () {",
-													"    pm.expect(pm.response.responseTime).to.be.below(300);",
+													"pm.test(\"Response time is less than 400ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(400);",
 													"});",
 													"",
 													"pm.test(\"Body matches string\", function () {",
@@ -731,11 +983,6 @@
 									"response": []
 								}
 							],
-							"_postman_isSubFolder": true
-						},
-						{
-							"name": "POST (deprecated)",
-							"item": [],
 							"_postman_isSubFolder": true
 						},
 						{
@@ -901,7 +1148,51 @@
 							"_postman_isSubFolder": true
 						}
 					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a61f51a5-7c2b-4e93-9c02-ab7a65490b34",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.set(\"Bad_User_ID\", \"4567\");"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "9bc4d913-a2f8-4cc5-a5e2-224e4db23c9f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
 					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "71ed1dbe-764b-4052-8112-ec11f7ed4aff",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"Users_Endpoint\", \"public-api/users\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "256ee6ff-f268-428b-afaf-d0856b235f5c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -1135,6 +1426,10 @@
 								"id": "ceb95740-eb4a-4501-bcee-eff3b1000c45",
 								"type": "text/javascript",
 								"exec": [
+									"pm.globals.set(\"Post_ID\", \"4\");",
+									"pm.globals.set(\"Post_UserID\", \"390\");",
+									"pm.globals.set(\"Post_Title\", \"ipsum\");",
+									"pm.globals.set(\"Post_Body\", \"consequatur\");",
 									""
 								]
 							}
@@ -1162,15 +1457,323 @@
 					"_postman_isSubFolder": true
 				},
 				{
-					"name": "POST (deprecated)",
-					"item": [],
+					"name": "PATCH/PUT",
+					"item": [
+						{
+							"name": "Backup Post Entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.globals.set(\"savedData\", JSON.stringify(jsonData.result));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/{{Posts_Endpoint}}/{{Update_Post_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Posts_Endpoint}}",
+										"{{Update_Post_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a post using PATCH",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"{{New_Post_UserID}}\",\r\n    \"title\": \"{{New_Post_Title}}\"\r\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Posts_Endpoint}}/{{Update_Post_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Posts_Endpoint}}",
+										"{{Update_Post_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Restore Post from Backup",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ab840253-4141-408a-bb7d-0c6ca708c899",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{savedData}}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Posts_Endpoint}}/{{Update_Post_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Posts_Endpoint}}",
+										"{{Update_Post_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Backup Post Entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.globals.set(\"savedData\", JSON.stringify(jsonData.result));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/{{Posts_Endpoint}}/{{Update_Post_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Posts_Endpoint}}",
+										"{{Update_Post_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a post using PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"{{New_Post_UserID}}\",\r\n    \"title\": \"{{New_Post_Title}}\",\r\n    \"body\": \"{{New_Post_Body}}\"\r\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Posts_Endpoint}}/{{Update_Post_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Posts_Endpoint}}",
+										"{{Update_Post_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Restore Post from Backup",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ab840253-4141-408a-bb7d-0c6ca708c899",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{savedData}}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Posts_Endpoint}}/{{Update_Post_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Posts_Endpoint}}",
+										"{{Update_Post_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
 					"event": [
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "cf47f0bb-84f5-48f1-b1e8-904a8c6e7396",
+								"id": "36359e8f-0330-4e89-8c1b-46273ab0d2e5",
 								"type": "text/javascript",
 								"exec": [
+									"pm.globals.set(\"Update_Post_ID\", \"18\");",
+									"",
+									"pm.globals.set(\"New_Post_UserID\", \"123\");",
+									"pm.globals.set(\"New_Post_Title\", \"This is a test title\")",
+									"pm.globals.set(\"New_Post_Body\", \"This is a test body section of text that is reall really long...\");",
 									""
 								]
 							}
@@ -1178,7 +1781,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b65d5dd6-d0af-408b-b05e-5576fe2f767a",
+								"id": "6fd0d0c4-8f68-42d7-8daf-2bffa663b57f",
 								"type": "text/javascript",
 								"exec": [
 									""
@@ -1189,18 +1792,307 @@
 					"_postman_isSubFolder": true
 				},
 				{
-					"name": "PATCH/PUT",
-					"item": [],
-					"_postman_isSubFolder": true
-				},
-				{
 					"name": "DELETE",
-					"item": [],
+					"item": [
+						{
+							"name": "Delete the post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ed1219c5-95c2-4ee4-9823-4e7f60a6e298",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"The request was handled successfully and the response contains no body content.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/{{Posts_Endpoint}}/{{Delete_Post_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Posts_Endpoint}}",
+										"{{Delete_Post_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "705295ab-d0a6-4a4a-b8c5-e8d2e1f34e2f",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.set(\"Delete_Post_ID\", \"1\");"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "fe111b13-f29f-4e54-bc2b-9ad9207e7bcc",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
 					"_postman_isSubFolder": true
 				},
 				{
 					"name": "Negative Tests",
-					"item": [],
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Negative - Return details of Post by bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 400ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(400);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/{{Posts_Endpoint}}/{{Bad_Post_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Posts_Endpoint}}",
+												"{{Bad_Post_ID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "PATCH/PUT",
+							"item": [
+								{
+									"name": "Negative - Update a post using PATCH, bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 300ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(300);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"user_id\": \"{{New_Post_UserID}}\",\r\n    \"title\": \"{{New_Post_Title}}\",\r\n    \"body\": \"{{New_Post_Body}}\"\r\n}"
+										},
+										"url": {
+											"raw": "{{URL}}/{{Posts_Endpoint}}/{{Bad_Post_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Posts_Endpoint}}",
+												"{{Bad_Post_ID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative - Update a post using PUT, bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "188b508c-35d1-47f2-9253-e8d715f34e27",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 300ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(300);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"user_id\": \"{{New_Post_UserID}}\",\r\n    \"title\": \"{{New_Post_Title}}\",\r\n    \"body\": \"{{New_Post_Body}}\"\r\n}"
+										},
+										"url": {
+											"raw": "{{URL}}/{{Posts_Endpoint}}/{{Bad_Post_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Posts_Endpoint}}",
+												"{{Bad_Post_ID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "DELETE",
+							"item": [
+								{
+									"name": "Negative - Delete the post but bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ed1219c5-95c2-4ee4-9823-4e7f60a6e298",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 300ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(300);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/{{Posts_Endpoint}}/{{Bad_Post_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Posts_Endpoint}}",
+												"{{Bad_Post_ID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "679fa660-7ca0-48cd-ba95-33f496b4f1a2",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.set(\"Bad_Post_ID\", \"4567\");"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ac89e2e-a2ee-4cd0-91b7-f7d9725a063d",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
 					"_postman_isSubFolder": true
 				}
 			],
@@ -1211,7 +2103,7 @@
 						"id": "56dddfb8-4110-40b0-b7d4-e5d050ef55dd",
 						"type": "text/javascript",
 						"exec": [
-							""
+							"pm.globals.set(\"Posts_Endpoint\", \"public-api/posts\");"
 						]
 					}
 				},
@@ -1515,6 +2407,646 @@
 									"tests[\"API name is Present\"] = responseBody.has(\"name\");",
 									"tests[\"API email is Present\"] = responseBody.has(\"email\");",
 									"tests[\"API body is Present\"] = responseBody.has(\"body\");",
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "PATCH/PUT",
+					"item": [
+						{
+							"name": "Backup Comment Entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.globals.set(\"savedData\", JSON.stringify(jsonData.result));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/{{Comments_Endpoint}}/{{Update_Comment_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Comments_Endpoint}}",
+										"{{Update_Comment_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a comment using PATCH",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"{{New_Comment_Name}}\",\r\n    \"title\": \"{{New_Comment_Body}}\"\r\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Comments_Endpoint}}/{{Update_Comment_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Comments_Endpoint}}",
+										"{{Update_Comment_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Restore Comment from Backup",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ab840253-4141-408a-bb7d-0c6ca708c899",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{savedData}}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Comments_Endpoint}}/{{Update_Comment_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Comments_Endpoint}}",
+										"{{Update_Comment_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Backup Comment Entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.globals.set(\"savedData\", JSON.stringify(jsonData.result));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/{{Comments_Endpoint}}/{{Update_Comment_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Comments_Endpoint}}",
+										"{{Update_Comment_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a Comment using PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"post_id\": \"{{New_Comment_PostID}}\",\r\n    \"name\": \"{{New_Comment_Name}}\",\r\n    \"email\": \"{{New_Comment_Email}}\",\r\n    \"body\": \"{{New_Comment_Body}}\"\r\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Comments_Endpoint}}/{{Update_Comment_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Comments_Endpoint}}",
+										"{{Update_Comment_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Restore Comment from Backup",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ab840253-4141-408a-bb7d-0c6ca708c899",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{savedData}}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Comments_Endpoint}}/{{Update_Comment_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Comments_Endpoint}}",
+										"{{Update_Comment_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "36359e8f-0330-4e89-8c1b-46273ab0d2e5",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.set(\"Update_Comment_ID\", \"15\");",
+									"",
+									"pm.globals.set(\"New_Comment_PostID\", \"1234\");",
+									"pm.globals.set(\"New_Comment_Name\", \"John Doh\");",
+									"pm.globals.set(\"New_Comment_Email\", \"tester@test.com\")",
+									"pm.globals.set(\"New_Comment_Body\", \"This is a test body section of text that is reall really long...\");",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "6fd0d0c4-8f68-42d7-8daf-2bffa663b57f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "Delete the comment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ed1219c5-95c2-4ee4-9823-4e7f60a6e298",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"The request was handled successfully and the response contains no body content.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/{{Comments_Endpoint}}/{{Delete_Comment_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Comments_Endpoint}}",
+										"{{Delete_Comment_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d3fce909-dc56-4cae-ad1b-320ef0958177",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.set(\"Delete_Comment_ID\", \"1\");"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "ea8e4757-a648-4290-ad19-8ff2b1028222",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Negative Tests",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Negative - Return details of Comment by bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 400ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(400);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/{{Comments_Endpoint}}/{{Bad_Comment_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Comments_Endpoint}}",
+												"{{Bad_Comment_ID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "PATCH/PUT",
+							"item": [
+								{
+									"name": "Negative - Update a comment using PATCH, bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 300ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(300);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"user_id\": \"{{New_Post_UserID}}\",\r\n    \"title\": \"{{New_Post_Title}}\",\r\n    \"body\": \"{{New_Post_Body}}\"\r\n}"
+										},
+										"url": {
+											"raw": "{{URL}}/{{Comments_Endpoint}}/{{Bad_Comment_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Comments_Endpoint}}",
+												"{{Bad_Comment_ID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative - Update a comment using PUT, bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "188b508c-35d1-47f2-9253-e8d715f34e27",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 300ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(300);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"user_id\": \"{{New_Post_UserID}}\",\r\n    \"title\": \"{{New_Post_Title}}\",\r\n    \"body\": \"{{New_Post_Body}}\"\r\n}"
+										},
+										"url": {
+											"raw": "{{URL}}/{{Comments_Endpoint}}/{{Bad_Comment_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Comments_Endpoint}}",
+												"{{Bad_Comment_ID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "DELETE",
+							"item": [
+								{
+									"name": "Negative - Delete the comment but bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ed1219c5-95c2-4ee4-9823-4e7f60a6e298",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 300ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(300);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/{{Comments_Endpoint}}/{{Bad_Comment_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Comments_Endpoint}}",
+												"{{Bad_Comment_ID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "679fa660-7ca0-48cd-ba95-33f496b4f1a2",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.set(\"Bad_Comment_ID\", \"4567\");"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ac89e2e-a2ee-4cd0-91b7-f7d9725a063d",
+								"type": "text/javascript",
+								"exec": [
 									""
 								]
 							}
@@ -2048,7 +3580,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "OCcRe6cGpZXuzm0KhBRaJ_nTUnjt4lbDb6Aa",
+				"value": "{{Auth_Token}}",
 				"type": "string"
 			}
 		]
@@ -2077,261 +3609,117 @@
 	],
 	"variable": [
 		{
-			"id": "c9e875ff-fc09-4ac3-9cf0-383d66fa994b",
-			"key": "User_Name",
-			"value": "John",
-			"type": "string"
-		},
-		{
-			"id": "cdb26277-898b-45aa-8496-a45c06a985e1",
-			"key": "Users_Endpoint",
-			"value": "public-api/users",
-			"type": "string"
-		},
-		{
-			"id": "ca75cf18-9101-4803-b3bb-1c2db6c5a17a",
-			"key": "New_User_Firstname",
-			"value": "Tod",
-			"type": "string"
-		},
-		{
-			"id": "8054c9e4-53f9-465e-8128-11fdea32cea9",
-			"key": "New_User_Lastname",
-			"value": "Doh",
-			"type": "string"
-		},
-		{
-			"id": "c5b9ef58-8a80-4584-a8da-be4c3d3a8f2a",
-			"key": "New_User_Gender",
-			"value": "male",
-			"type": "string"
-		},
-		{
-			"id": "03f6ac45-2d74-4e6d-9930-d3f09393814b",
-			"key": "New_User_DOB",
-			"value": "1977-01-01",
-			"type": "string"
-		},
-		{
-			"id": "6fa84061-fe3b-40d0-8ba4-8ad0bd4a068f",
-			"key": "New_User_Email",
-			"value": "tester@test.com",
-			"type": "string"
-		},
-		{
-			"id": "4f0ff7f1-79ac-4505-a7e2-b8e354b1072b",
-			"key": "New_User_Phone",
-			"value": "(123) 456-7890",
-			"type": "string"
-		},
-		{
-			"id": "8700b104-5490-4d3c-8c29-3c5e2417b3ce",
-			"key": "New_User_Website",
-			"value": "https://www.someplace.com/index.html",
-			"type": "string"
-		},
-		{
-			"id": "ab6d0a74-fa27-41d6-804a-57f9720e3cce",
-			"key": "New_User_Address",
-			"value": "1234 5th Street, New City, CA 90001",
-			"type": "string"
-		},
-		{
-			"id": "c165a769-c78a-47a7-9b76-e71f48b197b7",
-			"key": "New_User_Status",
-			"value": "active",
-			"type": "string"
-		},
-		{
-			"id": "64145b05-f3b9-4d64-b0ed-ea3b9c7d9e55",
-			"key": "User_ID",
-			"value": "4",
-			"type": "string"
-		},
-		{
-			"id": "bb0bcaef-059a-4203-8fe1-0789ad40f724",
-			"key": "User_Gender",
-			"value": "female",
-			"type": "string"
-		},
-		{
-			"id": "92adc3b0-7fce-49ff-a7ca-3e4b9629ec8d",
-			"key": "User_DOB",
-			"value": "1980",
-			"type": "string"
-		},
-		{
-			"id": "1e980d14-5bce-4d4d-a2a0-7f45e05816ec",
-			"key": "User_Email",
-			"value": "@example",
-			"type": "string"
-		},
-		{
-			"id": "6cd1caac-28e0-4e0b-8651-974fb0aeb6b9",
-			"key": "User_Phone",
-			"value": "%2B1",
-			"type": "string"
-		},
-		{
-			"id": "0f6e2abe-73c0-49db-b3cd-4b6bd95f1ab4",
-			"key": "User_Website",
-			"value": "zieme.com",
-			"type": "string"
-		},
-		{
-			"id": "edf84fde-0e38-4fe2-905e-1c566486db8b",
-			"key": "User_Address",
-			"value": ", CA",
-			"type": "string"
-		},
-		{
-			"id": "af1a93db-2225-4db6-b7f7-28a88fda876b",
-			"key": "User_Status",
-			"value": "inactive",
-			"type": "string"
-		},
-		{
-			"id": "038cde7f-5089-4b00-9a06-4a23a4c6009c",
-			"key": "Bad_User_ID",
-			"value": "4567",
-			"type": "string"
-		},
-		{
-			"id": "6eec2926-c854-48d8-b172-0ff79c53c15e",
-			"key": "Delete_User_ID",
-			"value": "123",
-			"type": "string"
-		},
-		{
-			"id": "b4cd78a6-ead8-42a8-afd1-85f102ac1d83",
-			"key": "Update_User_ID",
-			"value": "500",
-			"type": "string"
-		},
-		{
-			"id": "b5e9e023-f0e5-44e3-9851-91be6011c42f",
-			"key": "Posts_Endpoint",
-			"value": "public-api/posts",
-			"type": "string"
-		},
-		{
-			"id": "50051a56-b992-4c6d-a931-8ab7de4c32e0",
-			"key": "Post_ID",
-			"value": "4",
-			"type": "string"
-		},
-		{
-			"id": "da18e073-0927-4c01-b93a-592ad2aa551b",
-			"key": "Post_UserID",
-			"value": "390",
-			"type": "string"
-		},
-		{
-			"id": "8db1906a-ffd9-4fed-b4a5-5b47c300add9",
-			"key": "Post_Title",
-			"value": "ipsum",
-			"type": "string"
-		},
-		{
-			"id": "35bf8dea-b4ea-4556-b86a-44e0c607cdb2",
-			"key": "Post_Body",
-			"value": "consequatur",
-			"type": "string"
-		},
-		{
-			"id": "7aeb60ec-d9e1-4c87-a304-5f699cac3ef2",
+			"id": "66e3145d-ee83-4e84-8134-9a25457ae9e9",
 			"key": "Comments_Endpoint",
 			"value": "public-api/comments",
 			"type": "string"
 		},
 		{
-			"id": "f9427019-5dac-4d6a-92c1-6b4456f6acb2",
+			"id": "d2343755-297d-4db0-8293-52a7443ad038",
 			"key": "Comment_ID",
 			"value": "3",
 			"type": "string"
 		},
 		{
-			"id": "8888e892-c217-49fc-b691-312b04aaf955",
+			"id": "c17454c3-29cc-4ffa-aaf3-f5e91bd2dada",
 			"key": "Comment_PostID",
 			"value": "2790",
 			"type": "string"
 		},
 		{
-			"id": "ba8bbe03-712b-4b9b-ae0b-686079e713e5",
+			"id": "c990123a-ae94-4a04-8f66-f361899ce65f",
 			"key": "Comment_Name",
 			"value": "Maximillian",
 			"type": "string"
 		},
 		{
-			"id": "8275153e-c127-4813-8244-adc3df45aa61",
+			"id": "114a330a-dc19-4dab-9741-5f86b0ace9e0",
 			"key": "Comment_Email",
 			"value": "@hotmail.com",
 			"type": "string"
 		},
 		{
-			"id": "0b11cbc8-5027-4abd-ba27-0d02f765325d",
+			"id": "64aa8f4b-72be-4caa-b849-12ec5a9e898b",
 			"key": "Comment_Body",
 			"value": "veritatis",
 			"type": "string"
 		},
 		{
-			"id": "9a0c3454-a7c4-489e-ac65-4c462f9d6532",
+			"id": "7b0b7681-9e0a-46eb-bc18-4995c2717afe",
 			"key": "Albums_Endpoint",
 			"value": "public-api/albums",
 			"type": "string"
 		},
 		{
-			"id": "53a4fcf6-57a4-44d5-8734-309bc4e502a8",
+			"id": "59439677-0b34-4fd9-8e47-4cddd5ea7e49",
 			"key": "Album_ID",
 			"value": "17",
 			"type": "string"
 		},
 		{
-			"id": "1e32acbb-98fd-4bf9-bf02-78f81b0b6c80",
+			"id": "a38c92d0-2567-44a3-b8d2-4b91ae77e23f",
 			"key": "Album_UserID",
 			"value": "1115",
 			"type": "string"
 		},
 		{
-			"id": "8f952ae6-7ff8-4e9e-95aa-ccd27af27c97",
+			"id": "727901bc-d538-4418-8f35-990ed38bca5f",
 			"key": "Album_Title",
 			"value": "quidem",
 			"type": "string"
 		},
 		{
-			"id": "8b5aff71-8ae4-4b35-bbf2-d3b007587a88",
+			"id": "d89dfaa6-3187-47de-8d67-2e658b78bb73",
 			"key": "Photos_Endpoint",
 			"value": "public-api/photos",
 			"type": "string"
 		},
 		{
-			"id": "25291681-1428-49ab-a7b6-a1d2adf43ace",
+			"id": "318323af-8606-4770-9da3-15adbefc4129",
 			"key": "Photo_ID",
 			"value": "6",
 			"type": "string"
 		},
 		{
-			"id": "2332ca64-2d6f-45ad-82cd-7e11bc590331",
+			"id": "467ddbd4-98ea-436e-83db-2735b1bf2d24",
 			"key": "Photo_AlbumID",
 			"value": "970",
 			"type": "string"
 		},
 		{
-			"id": "710d3ecb-3ee2-428e-bdb0-935c2ef29517",
+			"id": "88262dbd-3762-4530-95f5-e66e92a32ef6",
 			"key": "Photo_Title",
 			"value": "dolorem",
 			"type": "string"
 		},
 		{
-			"id": "c12b37fe-b29c-4e80-ab9a-861ec8a4d76b",
+			"id": "3dcb2032-cb2f-4259-8a60-9ca8cd4b0d10",
 			"key": "Photo_Url",
 			"value": "lorempixel.com",
 			"type": "string"
 		},
 		{
-			"id": "059ecd20-17ea-48f5-801a-a07591358abc",
+			"id": "6e749af0-22d6-4db2-9cf1-95f6a0328c63",
 			"key": "Photo_Thumbnail",
 			"value": "lorempixel.com",
+			"type": "string"
+		},
+		{
+			"id": "f212f81d-b86a-4f1c-a2d8-fca19990812a",
+			"key": "URL",
+			"value": "https://gorest.co.in",
+			"type": "string"
+		},
+		{
+			"id": "30d3eee4-5e06-420c-bc2f-4186a4f2ec62",
+			"key": "Auth_Token",
+			"value": "OCcRe6cGpZXuzm0KhBRaJ_nTUnjt4lbDb6Aa",
+			"type": "string"
+		},
+		{
+			"id": "72302ce8-674d-4552-8945-45e42d50d17a",
+			"key": "Bad_Auth_Token",
+			"value": "AbCdEfG12345",
 			"type": "string"
 		}
 	]
