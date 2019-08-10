@@ -2387,6 +2387,11 @@
 								"id": "472e7d03-3ce4-44f2-bdbd-b433189d5913",
 								"type": "text/javascript",
 								"exec": [
+									"pm.globals.set(\"Comment_ID\", \"3\");",
+									"pm.globals.set(\"Comment_PostID\", \"2790\");",
+									"pm.globals.set(\"Comment_Name\", \"Maximillian\");",
+									"pm.globals.set(\"Comment_Email\", \"@hotmail.com\");",
+									"pm.globals.set(\"Comment_Body\", \"veritatis\");",
 									""
 								]
 							}
@@ -3054,6 +3059,28 @@
 					],
 					"_postman_isSubFolder": true
 				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1b8a4f32-3fb3-47b4-89ff-6181c734776b",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"Comments_Endpoint\", \"public-api/comments\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d893b88d-ae70-4880-84bb-407ff4ca6567",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		},
 		{
@@ -3248,6 +3275,9 @@
 								"id": "2709583a-6115-475a-bf97-0d735512a686",
 								"type": "text/javascript",
 								"exec": [
+									"pm.globals.set(\"Album_ID\", \"17\");",
+									"pm.globals.set(\"Album_UserID\", \"1115\");",
+									"pm.globals.set(\"Album_Title\", \"quidem\");",
 									""
 								]
 							}
@@ -3273,6 +3303,666 @@
 						}
 					],
 					"_postman_isSubFolder": true
+				},
+				{
+					"name": "PATCH/PUT",
+					"item": [
+						{
+							"name": "Backup Album Entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.globals.set(\"savedData\", JSON.stringify(jsonData.result));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/{{Albums_Endpoint}}/{{Update_Album_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Albums_Endpoint}}",
+										"{{Update_Album_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update an album using PATCH",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"{{New_Album_Title}}\"\r\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Albums_Endpoint}}/{{Update_Album_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Albums_Endpoint}}",
+										"{{Update_Album_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Restore Album from Backup",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ab840253-4141-408a-bb7d-0c6ca708c899",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{savedData}}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Albums_Endpoint}}/{{Update_Album_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Albums_Endpoint}}",
+										"{{Update_Album_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Backup Album Entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.globals.set(\"savedData\", JSON.stringify(jsonData.result));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/{{Albums_Endpoint}}/{{Update_Album_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Albums_Endpoint}}",
+										"{{Update_Album_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update an album using PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"{{New_Album_UserID}}\",\r\n    \"title\": \"{{New_Album_Title}}\"\r\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Albums_Endpoint}}/{{Update_Album_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Albums_Endpoint}}",
+										"{{Update_Album_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Restore Album from Backup",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ab840253-4141-408a-bb7d-0c6ca708c899",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{savedData}}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Albums_Endpoint}}/{{Update_Album_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Albums_Endpoint}}",
+										"{{Update_Album_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "36359e8f-0330-4e89-8c1b-46273ab0d2e5",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.set(\"Update_Album_ID\", \"2\");",
+									"",
+									"pm.globals.set(\"New_Album_UserID\", \"123\");",
+									"pm.globals.set(\"New_Album_Title\", \"This is a test title\");",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "6fd0d0c4-8f68-42d7-8daf-2bffa663b57f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "DELETE Copy",
+					"item": [
+						{
+							"name": "Delete the post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ed1219c5-95c2-4ee4-9823-4e7f60a6e298",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"The request was handled successfully and the response contains no body content.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/{{Albums_Endpoint}}/{{Delete_Album_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Albums_Endpoint}}",
+										"{{Delete_Album_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "705295ab-d0a6-4a4a-b8c5-e8d2e1f34e2f",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.set(\"Delete_Album_ID\", \"1\");"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "fe111b13-f29f-4e54-bc2b-9ad9207e7bcc",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Negative Tests",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Negative - Return details of Album by bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 400ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(400);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/{{Albums_Endpoint}}/{{Bad_Album_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Albums_Endpoint}}",
+												"{{Bad_Album_ID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "PATCH/PUT",
+							"item": [
+								{
+									"name": "Negative - Update a album using PATCH, bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 300ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(300);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"user_id\": \"{{New_Album_UserID}}\",\r\n    \"title\": \"{{New_Album_Title}}\",\r\n    \"body\": \"{{New_Album_Body}}\"\r\n}"
+										},
+										"url": {
+											"raw": "{{URL}}/{{Albums_Endpoint}}/{{Bad_Album_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Albums_Endpoint}}",
+												"{{Bad_Album_ID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative - Update a album using PUT, bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "188b508c-35d1-47f2-9253-e8d715f34e27",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 300ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(300);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"user_id\": \"{{New_Album_UserID}}\",\r\n    \"title\": \"{{New_Album_Title}}\",\r\n    \"body\": \"{{New_Album_Body}}\"\r\n}"
+										},
+										"url": {
+											"raw": "{{URL}}/{{Albums_Endpoint}}/{{Bad_Album_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Albums_Endpoint}}",
+												"{{Bad_Album_ID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "DELETE",
+							"item": [
+								{
+									"name": "Negative - Delete the album but bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ed1219c5-95c2-4ee4-9823-4e7f60a6e298",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 300ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(300);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/{{Albums_Endpoint}}/{{Bad_Album_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Albums_Endpoint}}",
+												"{{Bad_Album_ID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "679fa660-7ca0-48cd-ba95-33f496b4f1a2",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.set(\"Bad_Album_ID\", \"4567\");"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ac89e2e-a2ee-4cd0-91b7-f7d9725a063d",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ff2ea28f-8881-4de5-8c8c-7998d115d461",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"Albums_Endpoint\", \"public-api/albums\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0964ca73-3716-4e8c-a32f-40b9d4afb53e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -3392,8 +4082,8 @@
 									"script": {
 										"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
 										"exec": [
-											"pm.test(\"Body contains the album id \" + pm.variables.get(\"Photo_AlbumID\") + \" in results\", function () {",
-											"    pm.expect(pm.response.text()).to.include(pm.variables.get(\"Photo_AlbumID\"));",
+											"pm.test(\"Body contains the album id \" + pm.variables.get(\"Photo_PhotoID\") + \" in results\", function () {",
+											"    pm.expect(pm.response.text()).to.include(pm.variables.get(\"Photo_PhotoID\"));",
 											"});"
 										],
 										"type": "text/javascript"
@@ -3544,7 +4234,11 @@
 								"id": "eef9a86d-6c00-4dec-9166-6b90cf2c2ce2",
 								"type": "text/javascript",
 								"exec": [
-									""
+									"pm.globals.set(\"Photo_ID\", \"6\");",
+									"pm.globals.set(\"Photo_AlbumID\", \"970\");",
+									"pm.globals.set(\"Photo_Title\", \"dolorem\");",
+									"pm.globals.set(\"Photo_Url\", \"lorempixel.com\");",
+									"pm.globals.set(\"Photo_Thumbnail\", \"lorempixel.com\");"
 								]
 							}
 						},
@@ -3571,6 +4265,666 @@
 						}
 					],
 					"_postman_isSubFolder": true
+				},
+				{
+					"name": "PATCH/PUT",
+					"item": [
+						{
+							"name": "Backup Photo Entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.globals.set(\"savedData\", JSON.stringify(jsonData.result));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/{{Photos_Endpoint}}/{{Update_Photo_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Photos_Endpoint}}",
+										"{{Update_Photo_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a photo using PATCH",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"{{New_Photo_Title}}\"\r\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Photos_Endpoint}}/{{Update_Photo_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Photos_Endpoint}}",
+										"{{Update_Photo_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Restore Photo from Backup",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ab840253-4141-408a-bb7d-0c6ca708c899",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{savedData}}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Photos_Endpoint}}/{{Update_Photo_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Photos_Endpoint}}",
+										"{{Update_Photo_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Backup Photo Entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.globals.set(\"savedData\", JSON.stringify(jsonData.result));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/{{Photos_Endpoint}}/{{Update_Photo_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Photos_Endpoint}}",
+										"{{Update_Photo_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a photo using PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"{{New_Photo_AlbumID}}\",\r\n    \"title\": \"{{New_Photo_Title}}\"\r\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Photos_Endpoint}}/{{Update_Photo_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Photos_Endpoint}}",
+										"{{Update_Photo_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Restore Photo from Backup",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"OK. Everything worked as expected.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ab840253-4141-408a-bb7d-0c6ca708c899",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{savedData}}"
+								},
+								"url": {
+									"raw": "{{URL}}/{{Photos_Endpoint}}/{{Update_Photo_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Photos_Endpoint}}",
+										"{{Update_Photo_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "36359e8f-0330-4e89-8c1b-46273ab0d2e5",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.set(\"Update_Photo_ID\", \"4\");",
+									"",
+									"pm.globals.set(\"New_Photo_AlbumID\", \"1234\");",
+									"pm.globals.set(\"New_Photo_Title\", \"This is a test title\");",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "6fd0d0c4-8f68-42d7-8daf-2bffa663b57f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "DELETE Copy Copy",
+					"item": [
+						{
+							"name": "Delete the post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ed1219c5-95c2-4ee4-9823-4e7f60a6e298",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 300ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"The request was handled successfully and the response contains no body content.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/{{Photos_Endpoint}}/{{Delete_Photo_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"{{Photos_Endpoint}}",
+										"{{Delete_Photo_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "705295ab-d0a6-4a4a-b8c5-e8d2e1f34e2f",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.set(\"Delete_Photo_ID\", \"1\");"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "fe111b13-f29f-4e54-bc2b-9ad9207e7bcc",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Negative Tests Copy",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Negative - Return details of Photo by bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "19e8a61a-0c8e-46db-a85f-4bfec4a60202",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 400ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(400);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/{{Photos_Endpoint}}/{{Bad_Photo_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Photos_Endpoint}}",
+												"{{Bad_Photo_ID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "PATCH/PUT",
+							"item": [
+								{
+									"name": "Negative - Update a album using PATCH, bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6d0ecce0-b7a7-4027-9cae-bcc3b15cfa0a",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 300ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(300);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"title\": \"{{New_Photo_Title}}\"\r\n}"
+										},
+										"url": {
+											"raw": "{{URL}}/{{Photos_Endpoint}}/{{Bad_Photo_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Photos_Endpoint}}",
+												"{{Bad_Photo_ID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative - Update a album using PUT, bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "188b508c-35d1-47f2-9253-e8d715f34e27",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 300ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(300);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"user_id\": \"{{New_Photo_AlbumID}}\",\r\n    \"title\": \"{{New_Photo_Title}}\"\r\n}"
+										},
+										"url": {
+											"raw": "{{URL}}/{{Photos_Endpoint}}/{{Bad_Photo_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Photos_Endpoint}}",
+												"{{Bad_Photo_ID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "DELETE",
+							"item": [
+								{
+									"name": "Negative - Delete the album but bad ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ed1219c5-95c2-4ee4-9823-4e7f60a6e298",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 300ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(300);",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"The requested resource does not exist.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/{{Photos_Endpoint}}/{{Bad_Photo_ID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"{{Photos_Endpoint}}",
+												"{{Bad_Photo_ID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "679fa660-7ca0-48cd-ba95-33f496b4f1a2",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.set(\"Bad_Photo_ID\", \"4567\");"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ac89e2e-a2ee-4cd0-91b7-f7d9725a063d",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "15d82187-6d97-4a5f-80b7-2905c1254619",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"Photos_Endpoint\", \"public-api/photos\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "f4b8a04d-02a3-426d-b0a9-083382aabe2c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}
@@ -3609,115 +4963,19 @@
 	],
 	"variable": [
 		{
-			"id": "66e3145d-ee83-4e84-8134-9a25457ae9e9",
-			"key": "Comments_Endpoint",
-			"value": "public-api/comments",
-			"type": "string"
-		},
-		{
-			"id": "d2343755-297d-4db0-8293-52a7443ad038",
-			"key": "Comment_ID",
-			"value": "3",
-			"type": "string"
-		},
-		{
-			"id": "c17454c3-29cc-4ffa-aaf3-f5e91bd2dada",
-			"key": "Comment_PostID",
-			"value": "2790",
-			"type": "string"
-		},
-		{
-			"id": "c990123a-ae94-4a04-8f66-f361899ce65f",
-			"key": "Comment_Name",
-			"value": "Maximillian",
-			"type": "string"
-		},
-		{
-			"id": "114a330a-dc19-4dab-9741-5f86b0ace9e0",
-			"key": "Comment_Email",
-			"value": "@hotmail.com",
-			"type": "string"
-		},
-		{
-			"id": "64aa8f4b-72be-4caa-b849-12ec5a9e898b",
-			"key": "Comment_Body",
-			"value": "veritatis",
-			"type": "string"
-		},
-		{
-			"id": "7b0b7681-9e0a-46eb-bc18-4995c2717afe",
-			"key": "Albums_Endpoint",
-			"value": "public-api/albums",
-			"type": "string"
-		},
-		{
-			"id": "59439677-0b34-4fd9-8e47-4cddd5ea7e49",
-			"key": "Album_ID",
-			"value": "17",
-			"type": "string"
-		},
-		{
-			"id": "a38c92d0-2567-44a3-b8d2-4b91ae77e23f",
-			"key": "Album_UserID",
-			"value": "1115",
-			"type": "string"
-		},
-		{
-			"id": "727901bc-d538-4418-8f35-990ed38bca5f",
-			"key": "Album_Title",
-			"value": "quidem",
-			"type": "string"
-		},
-		{
-			"id": "d89dfaa6-3187-47de-8d67-2e658b78bb73",
-			"key": "Photos_Endpoint",
-			"value": "public-api/photos",
-			"type": "string"
-		},
-		{
-			"id": "318323af-8606-4770-9da3-15adbefc4129",
-			"key": "Photo_ID",
-			"value": "6",
-			"type": "string"
-		},
-		{
-			"id": "467ddbd4-98ea-436e-83db-2735b1bf2d24",
-			"key": "Photo_AlbumID",
-			"value": "970",
-			"type": "string"
-		},
-		{
-			"id": "88262dbd-3762-4530-95f5-e66e92a32ef6",
-			"key": "Photo_Title",
-			"value": "dolorem",
-			"type": "string"
-		},
-		{
-			"id": "3dcb2032-cb2f-4259-8a60-9ca8cd4b0d10",
-			"key": "Photo_Url",
-			"value": "lorempixel.com",
-			"type": "string"
-		},
-		{
-			"id": "6e749af0-22d6-4db2-9cf1-95f6a0328c63",
-			"key": "Photo_Thumbnail",
-			"value": "lorempixel.com",
-			"type": "string"
-		},
-		{
-			"id": "f212f81d-b86a-4f1c-a2d8-fca19990812a",
+			"id": "4fb91269-fc55-4d6d-ae15-2a355da647f9",
 			"key": "URL",
 			"value": "https://gorest.co.in",
 			"type": "string"
 		},
 		{
-			"id": "30d3eee4-5e06-420c-bc2f-4186a4f2ec62",
+			"id": "e9733b60-a321-4402-a3a3-789cd6368d75",
 			"key": "Auth_Token",
 			"value": "OCcRe6cGpZXuzm0KhBRaJ_nTUnjt4lbDb6Aa",
 			"type": "string"
 		},
 		{
-			"id": "72302ce8-674d-4552-8945-45e42d50d17a",
+			"id": "41934656-4558-4bea-b99a-4005079150a4",
 			"key": "Bad_Auth_Token",
 			"value": "AbCdEfG12345",
 			"type": "string"
